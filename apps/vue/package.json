@@ -1,0 +1,29 @@
+{
+  "name": "@web-components/vue-demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "volta": {
+    "extends": "../../package.json"
+  },
+  "scripts": {
+    "dev": "RENDER_MODE=spa nuxt dev --no-fork",
+    "dev:ssr": "RENDER_MODE=ssr nuxt dev --no-fork",
+    "build": "bun run build:spa && bun run build:ssr && bun run typecheck",
+    "build:spa": "RENDER_MODE=spa nuxt build",
+    "build:ssr": "RENDER_MODE=ssr nuxt build",
+    "typecheck": "RENDER_MODE=ssr nuxt typecheck",
+    "prepare": "nuxt prepare",
+    "lint": "biome check .",
+    "preview": "RENDER_MODE=spa nuxt preview",
+    "start:ssr": "node .output/ssr/server/index.mjs"
+  },
+  "dependencies": {
+    "nuxt": "^4.6.1",
+    "vee-validate": "^4.15.1",
+    "vue": "^3.5.42"
+  },
+  "devDependencies": {
+    "@web-components/ui": "workspace:*"
+  }
+}

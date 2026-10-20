@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Components</title>
+</head>
+
+<body>
+  <main class="demo-page">
+    <header class="demo-header">
+      <div>
+        <h1 class="text-xl font-bold">Web Components</h1>
+        <p class="demo-description">Lit で書いた 1 組のコンポーネントを、React・Vue・素の HTML から使うサンプルです。</p>
+      </div>
+      <label class="theme-control" for="theme">
+        テーマ
+        <select id="theme">
+          <option value="system">システム</option>
+          <option value="light">ライト</option>
+          <option value="dark">ダーク</option>
+        </select>
+      </label>
+    </header>
+    <section aria-labelledby="button-samples" class="demo-section">
+      <h2 id="button-samples">ボタン <code class="demo-tag">my-button</code></h2>
+      <p class="demo-description">クリック回数を数え、count-change イベントを送ります。内側のボタンは Tailwind のクラスで上書きできます。</p>
+      <div class="demo-actions">
+        <my-button name="デモ"></my-button>
+        <my-button name="カスタム" class="w-64" button-class="w-full bg-emerald-600 hover:bg-emerald-700"></my-button>
+      </div>
+      <p id="observed-count" class="demo-status">親が受け取った回数: 0</p>
+    </section>
+    <section aria-labelledby="async-action" class="demo-section">
+      <h2 id="async-action">非同期アクション <code class="demo-tag">my-button</code></h2>
+      <p class="demo-description">保存に時間がかかる想定のローディングボタン。チェックを入れると保存が失敗します。</p>
+      <my-button id="save-button" label="変更を保存" button-class="w-48"></my-button>
+      <my-checkbox id="fail-save" label="保存を失敗させる"></my-checkbox>
+      <p id="save-state" data-testid="save-state" aria-live="polite" class="demo-status">保存: 待機中</p>
+    </section>
+    <section aria-labelledby="card-samples" class="demo-section">
+      <h2 id="card-samples">カード <code class="demo-tag">my-card</code></h2>
+      <p class="demo-description">渡した中身を Shadow DOM のスロットに表示します。</p>
+      <my-card label="スロットの内容">
+        <p>この段落はカードのスロットに差し込まれています。</p>
+        <p id="slotted-count">スロット内のカウント: 0</p>
+      </my-card>
+    </section>
+    <section aria-labelledby="dialog-samples" class="demo-section">
+      <h2 id="dialog-samples">ダイアログ <code class="demo-tag">my-dialog</code></h2>
+      <p class="demo-description">ページから開くモーダル。Esc キーか「完了」ボタンで閉じます。</p>
+      <div class="demo-row">
+        <p id="dialog-state" aria-live="polite" class="demo-status">ダイアログ: 閉じています</p>
+        <button id="open-dialog" type="button" class="demo-button">プロフィールを編集</button>
+      </div>
+      <my-dialog label="プロフィールを編集" hidden>
+        <div class="flex flex-col gap-3">
+          <label class="flex flex-col gap-1 text-sm">
+            プロフィール名
+            <input id="profile-name" value="花子" class="demo-native-input" />
+          </label>
+          <button id="close-dialog" type="button" class="demo-button self-end">完了</button>
+        </div>
+      </my-dialog>
+    </section>
+    <section aria-labelledby="tabs-samples" class="demo-section demo-section-wide">
+      <h2 id="tabs-samples">タブ <code class="demo-tag">my-tabs</code></h2>
+      <p class="demo-description">パネルは value で対応づけます。履歴タブは無効です。</p>
+      <my-tabs label="プロフィール表示" value="overview">
+        <div slot="overview">
+          <p id="profile-summary">プロフィール: 花子</p>
+          <p id="role-summary">役割: 閲覧者</p>
+        </div>
+        <div slot="preferences">
+          <p id="updates-summary">通知: オフ</p>
+        </div>
+        <div slot="history">
+          <p>履歴はありません</p>
+        </div>
+      </my-tabs>
+      <div class="demo-row">
+        <p id="selected-view" aria-live="polite" class="demo-status">表示中のタブ: 概要</p>
+        <button id="reset-view" type="button" class="demo-button">表示をリセット</button>
+      </div>
+    </section>
+    <section aria-labelledby="input-samples" class="demo-section">
+      <h2 id="input-samples">入力部品 <code class="demo-tag">my-input</code> <code class="demo-tag">my-select</code> <code class="demo-tag">my-checkbox</code></h2>
+      <p class="demo-description">入力部品の組み合わせ。状態はページ側で持ち、変更イベントを受け取ります。</p>
+      <my-input label="表示名" value="花子" placeholder="名前を入力"></my-input>
+      <my-select label="役割" value="reader"></my-select>
+      <p id="selected-role" aria-live="polite" class="demo-status">選択中の役割: 閲覧者</p>
+      <my-checkbox id="updates" label="更新を受け取る"></my-checkbox>
+      <p id="input-state" role="status" class="demo-status">名前: 花子 / 通知: オフ</p>
+      <div class="demo-row">
+        <my-checkbox id="disable-inputs" label="入力を無効にする"></my-checkbox>
+        <button id="reset-inputs" type="button" class="demo-button">入力をリセット</button>
+      </div>
+    </section>
+    <form aria-label="プロフィールフォーム" novalidate class="demo-section">
+      <h2>フォーム <code class="demo-tag">my-image-uploader</code></h2>
+      <p class="demo-description">フォーカスを外したときと送信時に検証します。リセットで初期値に戻ります。</p>
+      <my-input label="アカウント名" value="花子"></my-input>
+      <my-select label="アクセス権限" value="reader"></my-select>
+      <my-checkbox label="利用規約に同意する"></my-checkbox>
+      <my-image-uploader label="プロフィール画像"></my-image-uploader>
+      <div class="demo-actions">
+        <button type="submit" class="demo-button">プロフィールを送信</button>
+        <button type="reset" class="demo-button">フォームをリセット</button>
+      </div>
+      <p data-testid="form-result" aria-live="polite" class="demo-status">まだ送信されていません</p>
+    </form>
+  </main>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>

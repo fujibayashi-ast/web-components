@@ -1,0 +1,33 @@
+{
+  "name": "@web-components/react-demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "volta": {
+    "extends": "../../package.json"
+  },
+  "scripts": {
+    "dev": "RENDER_MODE=spa react-router dev",
+    "dev:ssr": "RENDER_MODE=ssr react-router dev",
+    "build": "bun run build:spa && bun run build:ssr",
+    "build:spa": "RENDER_MODE=spa react-router build",
+    "build:ssr": "RENDER_MODE=ssr react-router build && bun run typecheck",
+    "typecheck": "react-router typegen && tsc --noEmit",
+    "lint": "biome check .",
+    "preview": "vite preview --outDir build/spa/client",
+    "start:ssr": "react-router-serve build/ssr/server/index.js"
+  },
+  "dependencies": {
+    "@react-router/node": "^8.4.0",
+    "@react-router/serve": "^8.4.0",
+    "isbot": "^5",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-hook-form": "^7.90.0",
+    "react-router": "^8.4.0"
+  },
+  "devDependencies": {
+    "@react-router/dev": "^8.4.0",
+    "@web-components/ui": "workspace:*"
+  }
+}

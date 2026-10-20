@@ -1,0 +1,75 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/build",
+      "!**/.react-router",
+      "!**/.nuxt",
+      "!**/.output",
+      "!**/storybook-static",
+      "!**/playwright-report",
+      "!**/test-results",
+      "!**/*.min.*",
+      "!**/*.svg",
+      "!bun.lock"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "always"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "html": {
+    "experimentalFullSupportEnabled": true
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.vue"],
+      "html": {
+        "formatter": {
+          "enabled": true
+        }
+      },
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedImports": "off",
+            "useHookAtTopLevel": "off",
+            "useExhaustiveDependencies": "off"
+          }
+        }
+      }
+    }
+  ]
+}
